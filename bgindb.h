@@ -24,10 +24,12 @@ typedef struct{
 
 	int data_descriptor;
 	int index_descriptor;
+	int log_descriptor;
 	off_t data_offset;
 	off_t index_offset;
 	char *index_path;
 	char *data_path;
+	char *log_path;
 	BGIN_LOGGING canlog;
 	BGIN_LOG_MODES logmode;
 	char test[100]; /* Note :this must be removed later*/ 
@@ -48,6 +50,14 @@ bgin_handle *bgin_init(BGIN_LOGGING, ...);
 //char *bgin_get(bgin_handle *, const char*);
 //int *bgin_put(bgin_handle *, const char*, const *char);
 //int *bgin_remove(bgin_handle *, const char*);
+
+/*Error and logs*/
+
+
+
+
+
+/*Utils*/
 
 
 #endif
