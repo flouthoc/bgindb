@@ -1,5 +1,6 @@
 #ifndef BGIN_BTREE
 #define BGIN_BTREE
+
 #include <stdint.h>
 #include <sys/types.h>
 
@@ -10,7 +11,7 @@
 #define BTREE_MIN_CHILD bgin_btree_degree;
 #define BTREE_MAX_CHILD 2*bgin_btree_degree;
 
-typedef struct{
+struct btree_node{
 
 	int8_t leaf;
 	uint8_t key[BTREE_MAX_KEYS]; //in doubt if this is right data type ? :\
@@ -18,7 +19,22 @@ typedef struct{
 	uint64_t children[BTREE_MAX_CHID];
 	uint64_t offset;
 
-} node;
+};
+
+struct bgin_btree{
+
+	struct btree_node *root;
+	size_t num_nodes;
+};
+
+
+int *bgin_btree_put(struct *bgin_btree, void *key, void *value);
+int *bgin_btree_get(struct *bgin_btree, void *key, void *value);
+int *bgin_btree_delete(struct *bgin_btree, void *key, void *value);
+
+
+
+
 
 
 
