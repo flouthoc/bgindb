@@ -1,10 +1,36 @@
 #ifndef BGIN_DB
 #define BGIN_DB
 #include <stdarg.h>
+#include <sys/types.h>
 
 
 #define KEY_LEN_MAX 1024;
 #define VALUE_LEN_MAX 1024;
+
+
+
+/*SwapXBytes functions are from yolinux.com*/
+
+#define Swap2Bytes(val) \
+ ( (((val) >> 8) & 0x00FF) | (((val) << 8) & 0xFF00) )
+
+// Swap 4 byte, 32 bit values:
+
+#define Swap4Bytes(val) \
+ ( (((val) >> 24) & 0x000000FF) | (((val) >>  8) & 0x0000FF00) | \
+   (((val) <<  8) & 0x00FF0000) | (((val) << 24) & 0xFF000000) )
+
+// Swap 8 byte, 64 bit values:
+
+#define Swap8Bytes(val) \
+ ( (((val) >> 56) & 0x00000000000000FF) | (((val) >> 40) & 0x000000000000FF00) | \
+   (((val) >> 24) & 0x0000000000FF0000) | (((val) >>  8) & 0x00000000FF000000) | \
+   (((val) <<  8) & 0x000000FF00000000) | (((val) << 24) & 0x0000FF0000000000) | \
+   (((val) << 40) & 0x00FF000000000000) | (((val) << 56) & 0xFF00000000000000) )
+
+
+
+
 
 
 typedef enum{
@@ -19,14 +45,14 @@ typedef enum{
 	DISABLED = 0,
 } BGIN_LOGGING;
 
-typedef struct{
+struct _bgin_handle{
 
 
 	int data_descriptor;
 	int index_descriptor;
 	int log_descriptor;
-	off_t data_offset;
-	off_t index_offset;
+	uint64_t data_offset;
+	uint64_t index_offset;
 	char *index_path;
 	char *data_path;
 	char *log_path;
@@ -40,7 +66,9 @@ typedef struct{
 	//int (*close)();
 	//char *(*get)(const char *);
 
-} bgin_handle;
+};
+
+typedef struct _bgin_handle bgin_handle;
 
 
 
@@ -52,6 +80,8 @@ bgin_handle *bgin_init(BGIN_LOGGING, ...);
 //int *bgin_remove(bgin_handle *, const char*);
 
 /*Error and logs*/
+
+
 
 
 
